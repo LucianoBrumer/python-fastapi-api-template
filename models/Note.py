@@ -3,4 +3,4 @@ from pydantic import BaseModel
 
 class Note(BaseModel):
     title: str
-    description: Union[str, None] = None
+    description: Union[str, None] = ''

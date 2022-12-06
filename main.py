@@ -1,6 +1,9 @@
 from fastapi import FastAPI
+from uuid import uuid4
 
+import utils.config
 from models.Note import *
+from utils.database import *
 
 app = FastAPI()
 
@@ -25,7 +28,13 @@ async def getNoteByID(id, limit = 0):
 
 @app.post("/api/note")
 async def createNote(note: Note):
-    return note
+    data = {
+        "id": str(uuid4()),
+        "title": note.title,
+        "description": note.description
+    }
+    conn.insert('note', data)
+    return data
 
 @app.put("/api/note/{id}")
 async def updateNoteByID(id):
@@ -40,3 +49,11 @@ async def deleteNoteByID(id):
         "id": id,
         "path": "delete note"
     }
+
+if __name__ == '__main__':
+    from uvicorn import run
+    from os import getenv
+
+    port = int(getenv('PORT'))
+
+    run(app, host="127.0.0.1", port=port)
