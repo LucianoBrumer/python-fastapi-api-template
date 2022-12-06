@@ -27,7 +27,7 @@ async def getNoteByID(id, limit = 0):
 async def createNote(note: Note):
     return note
 
-@app.update("/api/note/{id}")
+@app.put("/api/note/{id}")
 async def updateNoteByID(id):
     return {
         "id": id,
