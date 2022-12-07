@@ -1,4 +1,0 @@
-pip3 install fastapi
-pip3 install uvicorn
-pip3 install pymysql
-pip3 install peewee
