@@ -61,9 +61,7 @@ def initNoteRoutes(app):
 
     @app.delete('/api/note/{id}')
     async def deleteByID(id):
-        data = {
-            'id': id,
-        }
+        data = {'id': id,}
 
         Note.delete().where(Note.id == id).execute()
 

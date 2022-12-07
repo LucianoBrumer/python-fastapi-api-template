@@ -1,3 +1,6 @@
+import sys
+sys.path.append('..')
+
 from typing import Union
 import pydantic
 
@@ -8,9 +11,6 @@ class NoteSchema(pydantic.BaseModel):
 import peewee
 import datetime
 from uuid import uuid4
-
-import sys
-sys.path.append('..')
 
 from utils.database import BaseModel, conn
 
