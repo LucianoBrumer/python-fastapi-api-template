@@ -1,9 +1,16 @@
-from .mysrom import MySQLConnect
+from peewee import MySQLDatabase, Model
 from os import getenv
 
-conn = MySQLConnect(
-    host = getenv('DB_HOST'),
+conn = MySQLDatabase(
+    getenv('DB_NAME'),
     user = getenv('DB_USERNAME'),
     password = getenv('DB_PASSWORD'),
-    database = getenv('DB_NAME')
+    host = getenv('DB_HOST'),
+    port = int(getenv('DB_PORT'))
 )
+
+class BaseModel(Model):
+    class Meta:
+        database = conn
+
+conn.connect()
