@@ -1,4 +1,4 @@
-from uuid import uuid4
+# from uuid import uuid4
 
 import sys
 sys.path.append("..")
@@ -34,34 +34,33 @@ def initNoteRoutes(app):
     @app.post("/api/note")
     async def create(note: NoteSchema):
         data = {
-            "__data__": {
-                "id": str(uuid4()),
-                "title": note.title,
-                "description": note.description
-            }
+            # "id": str(uuid4()),
+            "title": note.title,
+            "description": note.description
         }
+
         Note.create(
-            id=data.get('id'),
+            # id=data.get('id'),
             title=data.get('title'),
             description=data.get('description'),
         )
-        return data
+
+        return {"__data__": data}
 
     @app.put("/api/note/{id}")
     async def updateByID(note: NoteSchema, id):
         data = {
-            "__data__": {
-                "id": id,
-                "title": note.title,
-                "description": note.description
-            }
+            "id": id,
+            "title": note.title,
+            "description": note.description
         }
+
         Note.update({
             Note.title: data.get('title'),
             Note.description: data.get('description'),
         }).where(Note.id == id).execute()
 
-        return data
+        return {"__data__": data}
 
     @app.delete("/api/note/{id}")
     async def deleteByID(id):
@@ -70,5 +69,7 @@ def initNoteRoutes(app):
                 "id": id,
             }
         }
+
         Note.delete().where(Note.id == id).execute()
+
         return data

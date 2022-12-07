@@ -7,13 +7,15 @@ class NoteSchema(pydantic.BaseModel):
 
 import peewee
 import datetime
+from uuid import uuid4
 
 import sys
 sys.path.append('..')
 from utils.database import BaseModel, conn
 
 class Note(BaseModel):
-    id = peewee.TextField(unique=True)
+    # id = peewee.TextField(unique=True)
+    id = peewee.UUIDField(primary_key=True, default=uuid4)
     title = peewee.TextField(default='')
     description = peewee.TextField(default='')
     createdAt = peewee.DateTimeField(default=datetime.datetime.now)
