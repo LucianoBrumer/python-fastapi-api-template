@@ -9,5 +9,5 @@ python -m pip3 install -r requirements.txt
 
 To start the app, run the command:
 ```
-python main.py
+python src/main.py
 ```
