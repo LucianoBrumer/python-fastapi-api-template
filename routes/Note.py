@@ -1,12 +1,11 @@
-# from uuid import uuid4
-
 import sys
-sys.path.append("..")
+sys.path.append('..')
+
 from models.Note import Note, NoteSchema
 from utils.database import conn
 
 def initNoteRoutes(app):
-    @app.get("/api/note")
+    @app.get('/api/note')
     async def getAll():
         try:
             data = []
@@ -20,39 +19,37 @@ def initNoteRoutes(app):
 
                 data.append(table)
 
-            return {"__data__": data}
+            return {'__data__': data}
         except Exception as e:
-            return {"__data__": ""}
+            return {'__data__': ''}
 
-    @app.get("/api/note/{id}")
+    @app.get('/api/note/{id}')
     async def getByID(id):
         try:
             return Note.select().where(Note.id == id).get()
         except Exception as e:
-            return {"__data__": ""}
+            return {'__data__': ''}
 
-    @app.post("/api/note")
+    @app.post('/api/note')
     async def create(note: NoteSchema):
         data = {
-            # "id": str(uuid4()),
-            "title": note.title,
-            "description": note.description
+            'title': note.title,
+            'description': note.description
         }
 
         Note.create(
-            # id=data.get('id'),
             title=data.get('title'),
             description=data.get('description'),
         )
 
-        return {"__data__": data}
+        return {'__data__': data}
 
-    @app.put("/api/note/{id}")
+    @app.put('/api/note/{id}')
     async def updateByID(note: NoteSchema, id):
         data = {
-            "id": id,
-            "title": note.title,
-            "description": note.description
+            'id': id,
+            'title': note.title,
+            'description': note.description
         }
 
         Note.update({
@@ -60,16 +57,14 @@ def initNoteRoutes(app):
             Note.description: data.get('description'),
         }).where(Note.id == id).execute()
 
-        return {"__data__": data}
+        return {'__data__': data}
 
-    @app.delete("/api/note/{id}")
+    @app.delete('/api/note/{id}')
     async def deleteByID(id):
         data = {
-            "__data__": {
-                "id": id,
-            }
+            'id': id,
         }
 
         Note.delete().where(Note.id == id).execute()
 
-        return data
+        return {'__data__': data}
