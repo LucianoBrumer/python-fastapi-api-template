@@ -8,18 +8,7 @@ def initNoteRoutes(app):
     @app.get('/api/note')
     async def getAll():
         try:
-            data = []
-            cursor = conn.execute_sql('SELECT * FROM note')
-            for row in cursor.fetchall():
-                table = dict()
-
-                for column, value in zip(cursor.description, row):
-                    column_name = column[0]
-                    table[column_name] = value
-
-                data.append(table)
-
-            return {'__data__': data}
+            return {'__data__': list(Note.select().dicts())}
         except Exception as e:
             return {'__data__': ''}
 
